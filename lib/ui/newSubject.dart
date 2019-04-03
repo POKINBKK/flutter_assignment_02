@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_assignment_02/db/todoDB.dart';
+
 
 class NewSubject extends StatefulWidget{
   @override
@@ -11,6 +13,8 @@ class NewSubject extends StatefulWidget{
 class NewSubjectState extends State<NewSubject>{
   final _formkey = GlobalKey<FormState>();
   final myController = TextEditingController();
+  TodoCRUD todo = TodoCRUD();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,9 +38,16 @@ class NewSubjectState extends State<NewSubject>{
             ),
             RaisedButton(
               child: Text("submit"),
-              onPressed: () {
+              onPressed: () async {
                 _formkey.currentState.validate();
                 if(myController.text.length > 0){
+                  await todo.open("todo.db");
+                  Todo data = Todo();
+                  data.todoItem = myController.text;
+                  data.isDone = false;
+                  await todo.insert(data);
+                  print(data);
+                  print('insert complete');
                   Navigator.pop(context);
                 }
                 myController.text = "";
