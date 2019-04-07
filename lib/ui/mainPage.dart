@@ -26,7 +26,7 @@ class MainPageState extends State<MainPage> {
           ),
       IconButton(
           icon: Icon(Icons.delete),
-          onPressed: () async{
+          onPressed: () async {
             for(var item in complete){
               print(item.id);
               await todo.delete(item.id);
@@ -78,7 +78,7 @@ class MainPageState extends State<MainPage> {
               if (snapshot.hasData){
                 //add items in db to list
                 for (var items in snapshot.data) {
-                  if (items.isDone == false) {
+                  if (items.done == false) {
                     task.add(items);
                   }
                 }
@@ -89,27 +89,27 @@ class MainPageState extends State<MainPage> {
                     itemBuilder: (BuildContext context, int index) {
                       Todo item = task[index];
                       return ListTile(
-                        title: Text(item.todoItem),
+                        title: Text(item.title),
                         trailing: Checkbox(
                         onChanged: (bool value) async {
                           setState(() {
-                            item.isDone = value;
+                            item.done = value;
                           });
                           todo.update(item);
                           },
-                        value: item.isDone,
+                        value: item.done,
                         ),
                       );
                     },
                   )
                   //Nope
                   : Center(
-                    child: Text("No Data Found"),
+                    child: Text("No Data Found.."),
                   );
               //recieve uncomplete
               } else {
                 return Center(
-                  child: Text("No Data Found"),
+                  child: Text("No Data Found.."),
                 );
               }
             }
@@ -126,7 +126,7 @@ class MainPageState extends State<MainPage> {
               if (snapshot.hasData){
                 //add items in db to list
                 for (var items in snapshot.data) {
-                  if (items.isDone == true) {
+                  if (items.done == true) {
                     complete.add(items);
                   }
                 }
@@ -137,27 +137,27 @@ class MainPageState extends State<MainPage> {
                     itemBuilder: (BuildContext context, int index) {
                       Todo item = complete[index];
                       return ListTile(
-                        title: Text(item.todoItem),
+                        title: Text(item.title),
                         trailing: Checkbox(
                         onChanged: (bool value) async {
                           setState(() {
-                            item.isDone = value;
+                            item.done = value;
                           });
                           todo.update(item);
                           },
-                        value: item.isDone,
+                        value: item.done,
                         ),
                       );
                     },
                   )
                   //Nope
                   : Center(
-                    child: Text("No Data Found"),
+                    child: Text("No Data Found.."),
                   );
               //recieve uncomplete
               } else {
                 return Center(
-                  child: Text("No Data Found"),
+                  child: Text("No Data Found.."),
                 );
               }
             }
